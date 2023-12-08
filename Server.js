@@ -17,6 +17,7 @@ import productRoute from "./routes/productRoute.js";
 
 // Setting
 const app = express();
+const publicRoot = './client/build';
 dotenv.config();
 const PORT = process.env.PORT || 8080;
 connectDb();
@@ -43,7 +44,7 @@ app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(errorHandler);
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
     origin: ["http://localhost:3000"],
@@ -51,7 +52,7 @@ app.use(
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
-app.use(express.static(path.join(__dirname, './client/build')));
+app.use(express.static(publicRoot));
 
 // Routes
 app.use("/auth", authRoute);
@@ -59,7 +60,7 @@ app.use("/category", categoryRoute);
 app.use("/products", productRoute);
 app.use("/api-docs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
 app.get('*', function(req, res) {
-  res.sendFile(path.join(__dirname, './client/build/index.html'));
+  res.sendFile(path.join(publicRoot, './client/build/index.html'));
 });
 
 // Server
