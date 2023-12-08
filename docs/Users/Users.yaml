@@ -1,0 +1,127 @@
+paths:
+  /users/getuser:
+    get:
+      summary: Obtiene todos los usuarios
+      tags:
+        - Users
+      responses:
+        "200":
+          description: Los usuarios fueron obtenidos satisfactoriamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/User"
+        "500":
+          description: Error interno del servidor,usualmente generado por una query defectuosa
+    post:
+      summary: Crea nuevo usuario
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/schemas/User"
+      responses:
+        "200":
+          description: Usuario creado satisfactoriamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/User"
+        "400":
+          description: Solicitud incorrecta verificar datos
+        "500":
+          description: Error interno del servidor,usualmente generado por una query defectuosa
+  /users/{uid}:
+    get:
+      summary: Obtiene solo un usuario  a partir de su id
+      tags:
+        - Users
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: id del usuario a solicitar
+          schema:
+            $type: String
+      responses:
+        "200":
+          description: El usuario fue obtenidos satisfactoriamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/User"
+        "500":
+          description: Error interno del servidor,usualmente generado por una query defectuosa
+    put:
+      summary: Actualiza a un usuario a partir de su id
+      tags:
+        - Users
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: Se para por el path el id del usuario a modificar
+          schema:
+            $type: String
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/schemas/requestBodies/updateUser"
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id autogenerado por mongo db
+        first_name:
+          type: String
+          description: Nombre del usuario
+        last_name:
+          type: String
+          description: Apellido del usuario
+        email:
+          type: String
+          description: correo electronico del usuario
+        password:
+          type: String
+          description: Contrasena del usuario
+      example:
+        _id: ObjectId("abc12345ascxsdfgbxxssdfs")
+        first_name: "Ariel"
+        last_name: "Videla"
+        email: "avidela@gmail.com"
+        password: "$adsfs%2234$$wsafsfmnsd#$432122"
+    requestBodies:
+      updateUser:
+        type: object
+        properties:
+          first_name:
+            type: String
+            description: Nombre del usuario
+          last_name:
+            type: String
+            description: Apellido del usuario
+          email:
+            type: String
+            description: correo electronico del usuario
+          password:
+            type: String
+            description: Contrasena del usuario
+        example:
+          first_name: "Alejandro"
+          last_name: "Videla"
+          email: "alvidela@gmail.com"
+          password: 123456

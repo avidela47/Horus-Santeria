@@ -1,0 +1,151 @@
+paths:
+  /products/getproducts:
+    get:
+      summary: Obtiene todos los productos
+      tags:
+        - Products
+      responses:
+        "200":
+          description: Los productos fueron obtenidos satisfactoriamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Product"
+        "500":
+          description: Error interno del servidor,usualmente generado por una query defectuosa
+    post:
+      summary: Crea nuevo producto
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/schemas/Product"
+      responses:
+        "200":
+          description: Producto creado satisfactoriamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Product"
+        "400":
+          description: Solicitud incorrecta verificar datos
+        "500":
+          description: Error interno del servidor,usualmente generado por una query defectuosa
+  /products/{pid}:
+    get:
+      summary: Obtiene solo un producto  a partir de su id
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: id del producto a solicitar
+          schema:
+            $type: String
+      responses:
+        "200":
+          description: El producto fue obtenido satisfactoriamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Product"
+        "500":
+          description: Error interno del servidor,usualmente generado por una query defectuosa
+    put:
+      summary: Actualiza a un producto a partir de su id
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: Se para por el path el id del producto a modificar
+          schema:
+            $type: String
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/schemas/requestBodies/updateProduct"
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id autogenerado por mongo db
+        title:
+          type: String
+          description: Nombre del producto
+        description:
+          type: String
+          description: Descripcion del producto
+        price:
+          type: Number
+          description: Precio del producto
+        thumbnails:
+          type: String
+          description: Imagen del producto
+        code:
+          type: String
+          description: Codigo del producto
+        stock:
+          type: Number
+          description: Stock del producto
+        category:
+          type: String
+          description: Categoria del producto
+      example:
+        _id: ObjectId("abc12345ascxsdfgbxxssdfs")
+        title: "Sahumerios Aromanza"
+        description: "Sahumerios Buena Onda Aromanza"
+        price: "500"
+        thumbnails: "foto.jpg"
+        code: "ACB123"
+        stock: "15"
+        category: "Sahumerios"
+    requestBodies:
+      updateUser:
+        type: object
+        properties:
+          title:
+          type: String
+          description: Nombre del producto
+        description:
+          type: String
+          description: Descripcion del producto
+        price:
+          type: Number
+          description: Precio del producto
+        thumbnails:
+          type: String
+          description: Imagen del producto
+        code:
+          type: String
+          description: Codigo del producto
+        stock:
+          type: Number
+          description: Stock del producto
+        category:
+          type: String
+          description: Categoria del producto
+        example:
+          title: "Sahumerios Aromanza"
+          description: "Sahumerios Buena Onda Aromanza"
+          price: "500"
+          thumbnails: "foto.jpg"
+          code: "ACB123"
+          stock: "15"
+          category: "Sahumerios"
