@@ -51,7 +51,7 @@ app.use(
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
-app.use(express.static(path.join(__dirname, './frontend/build')));
+app.use(express.static(path.join(__dirname, './client/build')));
 
 // Routes
 app.use("/auth", authRoute);
@@ -59,7 +59,7 @@ app.use("/category", categoryRoute);
 app.use("/products", productRoute);
 app.use("/api-docs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
 app.get('*', function(req, res) {
-  res.sendFile(path.join(__dirname, './frontend/build/index.html'));
+  res.sendFile(path.join(__dirname, './client/build/index.html'));
 });
 
 // Server
