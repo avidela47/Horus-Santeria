@@ -27,7 +27,7 @@ const swaggerOptions = {
     info: {
       title: "Trabajo Final - Horus Santeria",
       version: "1.0.0",
-      description: "Comisión 43385 - Documentar API - Trabajo Final 2023",
+      description: "Comisión 43385 - Documenta API - Trabajo Final 2023",
       contact: {
         name: "Ariel",
       },
